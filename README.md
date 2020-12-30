@@ -2,15 +2,15 @@
 
 ## Webpage
 
-Unable to host index.html on github.io without error since mapbox.com requires an 'API_KEY' and mine is not going to be shared on github.
+Unable to host index.html on github.io without error since mapbox.com requires an `API_KEY` and mine is not going to be shared on github.
 
 The webpage currently is defaulted to a light view, with the full 1-9 Richter scale in place, pulling earthquake data from [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) from the last 7 days. The map is created using [mapbox](https://www.mapbox.com/) and [leaflet](https://leafletjs.com/).
 
 To change the date range of the earthquakes, just select a different 'const url...' in the [logic.js](https://github.com/meielerol/leaflet-challenge/blob/main/static/js/logic.js) file.
-* 'urlLastHour' = last 60 minutes of earthquake data
-* 'urlLastDay' = last 24 hours of earthquake data
-* 'urlLast7Days' = last 7 days of earthquake data
-* 'urlLast30Days' = last 30 days of earthquake data
+* `urlLastHour` = last 60 minutes of earthquake data
+* `urlLastDay` = last 24 hours of earthquake data
+* `urlLast7Days` = last 7 days of earthquake data
+* `urlLast30Days` = last 30 days of earthquake data
 
 The [colors.xlsx](https://github.com/meielerol/leaflet-challenge/blob/main/static/reference/colors.xlsx) in the reference folder was used to figure out the color scale for the legend and earthquake markers.
 
