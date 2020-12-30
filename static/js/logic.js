@@ -13,28 +13,57 @@ d3.json(urlLast7Days, function(data) {
 });
 
 function assignMagColor(earthqukeMagnitude) {
+/*
+used 3 faded color scale: dark green - yellow - dark red
+https://www.w3schools.com/colors/colors_picker.asp to pick the colors
+https://www.w3schools.com/colors/colors_mixer.asp used spots 6, 11, 16 between [1,21] for each [green,yellow] and [yellow,red]
+*/
+
     if (earthqukeMagnitude <= 1) {
-        color = "#00cc00";
+        color = "#009900";
     } else if (earthqukeMagnitude <= 2) {
-        color = "#66ff33";
+        color = "#40b200";
     } else if (earthqukeMagnitude <= 3) {
-        color = "#ccff33";
+        color = "#80cc00";
     } else if (earthqukeMagnitude <= 4) {
-        color = "#ffff00";
+        color = "#bfe600";
     } else if (earthqukeMagnitude <= 5) {
-        color = "#ff9933";
+        color = "#ffff00";
     } else if (earthqukeMagnitude <= 6) {
-        color = "#ff9999";
+        color = "#f2bf00";
     } else if (earthqukeMagnitude <= 7) {
-        color = "#cc5200";
+        color = "#e68000";
     } else if (earthqukeMagnitude <= 8) {
-        color = "#e62e00";
+        color = "#d94000";
     } else {
-        color = "#b30000";
+        color = "#cc0000";
     };
     // console.log(earthqukeMagnitude, color);
 
     return color;
+};
+
+function createLegend(myMap) {
+    // create the legend
+    let legend = L.control({position: 'bottomright'});
+    legend.onAdd = function(map) {
+        let div = L.DomUtil.create('div', 'legend'),
+            labels = ['<strong>Richter Scale</strong>']
+            colors = ['#009900','#40b200','#80cc00','#bfe600','#ffff00','#f2bf00','#e68000','#d94000','#cc0000'];
+
+        let scaleLabels = ['<= 1', '1-2', '2-3','3-4','4-5','5-6','6-7','7-8','> 8'];
+
+        for (i = 0; i < colors.length; i++) {
+            div.innerHTML +=
+                labels.push(
+                    '<i style="background: ' + colors[i] + '"></i><span>' + scaleLabels[i] + '</span>'
+                );
+        };
+        div.innerHTML = labels.join('<br>');
+        
+        return div;
+    };
+    legend.addTo(myMap);
 };
 
 function createFeatures(earthquakeData) {
@@ -68,8 +97,9 @@ function createFeatures(earthquakeData) {
         let earthquake = L.circle(
             [lat, lng], {
             color: magColor,
+            weight:1,
             fillColor: magColor,
-            fillOpacity: 0.5,
+            fillOpacity: 0.7,
             radius: mag * 10000
         }).bindPopup("<h3>Place: " + place + 
             "<hr>Location: [" + lat + ", " + lng + 
@@ -131,11 +161,14 @@ function createMap(earthquakeMarkers) {
     var myMap = L.map("map", {
         center: [39.8283, -98.5795],
         zoom: 4,
-        layers: [normal, earthquakeLayer]    //add the earthquakeLayer
+        layers: [normal, earthquakeLayer]
     });
 
     // Create a layer control
     // Pass in our baseMaps and overlayMaps
     // Add the layer control to the map
-    L.control.layers(baseMaps, overlayEarthquakes).addTo(myMap);    //add the overlayEarthquakes layer
+    L.control.layers(baseMaps, overlayEarthquakes).addTo(myMap);
+
+    // call legend function
+    createLegend(myMap);
 };
