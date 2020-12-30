@@ -161,7 +161,7 @@ function createMap(earthquakeMarkers) {
     var myMap = L.map("map", {
         center: [39.8283, -98.5795],
         zoom: 4,
-        layers: [normal, earthquakeLayer]
+        layers: [light, earthquakeLayer]
     });
 
     // Create a layer control
